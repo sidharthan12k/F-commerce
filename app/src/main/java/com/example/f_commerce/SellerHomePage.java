@@ -26,61 +26,74 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import java.util.concurrent.TimeUnit;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SellerHomePage extends AppCompatActivity {
     ImageView imgView;
-    EditText et1, et2, et3, et4;
+    EditText et1, et2, et3, et4,et5;
     TextView latTxt, longTxt;
     Button getLoc, saveItem;
-    String longtlat;
+    String longtlat,usr;
     String lat, longg;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-
+    DatabaseReference database;
     private static final int PICK_IMAGE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seller_home_page);
+        Intent intent = getIntent();
+        usr = intent.getStringExtra("usr");
+        Toast.makeText(getApplicationContext(), usr, Toast.LENGTH_LONG).show();
+        latTxt = (TextView) findViewById(R.id.latitudeData);
+        longTxt = (TextView) findViewById(R.id.loggitudeData);
         imgView = (ImageView) findViewById(R.id.imgData);
         et1 = (EditText) findViewById(R.id.nameData);
         et2 = (EditText) findViewById(R.id.speciesData);
         et3 = (EditText) findViewById(R.id.descriptionData);
-        et4 = (EditText) findViewById(R.id.MRPPrice);
-
+        et4 = (EditText) findViewById(R.id.quantityData);
+        et5 = (EditText) findViewById(R.id.MRPPrice);
         getLoc = (Button) findViewById(R.id.getLocation);
         //imgview onclick
+        saveItem = (Button) findViewById(R.id.button8);
         imgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selectImage();
             }
         });
-
+        saveItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("btn",""+latTxt.getText().toString());
+                String  name, species, description, quantityData, mrp, latlong;
+                name = et1.getText().toString();
+                species = et2.getText().toString();
+                description = et3.getText().toString();
+                quantityData = et4.getText().toString();
+                mrp = et5.getText().toString();
+                latlong = latTxt.getText().toString()+"?"+longTxt.getText().toString();
+                uploadToFirebase(usr , name,species,description,quantityData,mrp,latlong);
+            }
+        });
 
         getLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 String str = "";
+
+
                 try {
-                    for(int i=0;i<5;i++) {
-                        if(i==0)
-                            str = getCurrentLocation();
-                        TimeUnit.SECONDS.sleep(2);
-                    }
-//                    SidhuHack sd = new SidhuHack(getApplicationContext());
-//                    String st =sd.doInBackground();
-                    Log.d("hello", "" + longtlat + "btn");
+                    getCurrentLocation();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //setLatlog("", "");
+                Log.d("hello", "" + str + "btn");
             }
         });
-
     }
 
 
@@ -99,8 +112,7 @@ public class SellerHomePage extends AppCompatActivity {
     }
 
     public void saveItems(View view) {
-        FirebaseDataTransfer fdt = new FirebaseDataTransfer();
-        fdt.UploadItem(et1.getText().toString(), et2.getText().toString(), et3.getText().toString(), et4.getText().toString());
+
 
     }
 
@@ -183,10 +195,8 @@ public class SellerHomePage extends AppCompatActivity {
                 setLatlog(String.valueOf(lat), String.valueOf(location.getLongitude()));
                 Toast.makeText(getApplicationContext(), "" + lat + "lastloc", Toast.LENGTH_LONG).show();
                 Log.d("hello", "" + lat + "lat in success");
-                longtlat = String.valueOf(lat);
-                if (longtlat != null) {
-                    // return longtlat;
-                }
+                latTxt.setText(""+location.getLatitude());
+                longTxt.setText(""+location.getLongitude());
             }
         });
         Log.d("hello", "" + longtlat + "longtlat last");
@@ -196,44 +206,24 @@ public class SellerHomePage extends AppCompatActivity {
     private void setLatlog(String loongg, String lat) {
         Log.d("hello", longg + "set");
         Log.d("hello", lat + "setlatlog");
-        latTxt = (TextView) findViewById(R.id.latitudeData);
-        longTxt = (TextView) findViewById(R.id.loggitudeData);
+
         //Toast.makeText(getApplicationContext(),""+str,Toast.LENGTH_LONG).show();
         latTxt.setText(" " + longtlat);
         longg = loongg;
 
     }
+    public void uploadToFirebase(String usr, String name,String species,String description, String price,String quantity ,String latlong){
+        Toast.makeText(getApplicationContext(),usr+" upload",Toast.LENGTH_LONG).show();
+        database = FirebaseDatabase.getInstance("https://f-commerce-34ffe-default-rtdb.asia-southeast1.firebasedatabase.app").getReference("products");
+        String str = database.child("products").getRef().getKey();
+        str = database.child(name).child(usr).getRef().getKey();
+        //str = database.child(str).child(name).getRef().getKey();
+        database.child(str).child("usr").setValue(usr);
+        database.child(str).child("species").setValue(species);
+        database.child(str).child("decs").setValue(description);
+        database.child(str).child("price").setValue(price);
+        database.child(str).child("quantity").setValue(quantity);
+        database.child(str).child("latlong").setValue(latlong);
+
+    }
 }
-//
-//class SidhuHack extends AsyncTask<Void, Void, String> {
-//    Context contextt;
-//    String longtlat;
-//    public SidhuHack(Context context){
-//        contextt = context;
-//    }
-//
-//
-//    @Override
-//    protected String doInBackground(Void... voids) {
-//        if (ActivityCompat.checkSelfPermission(contextt, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(contextt, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//
-//        }
-//        LocationServices.getFusedLocationProviderClient(contextt).getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-//            @Override
-//            public void onSuccess(@NonNull Location location) {
-//                double lat = location.getLatitude();
-//
-//                Log.d("hello", "" + lat + "lastLoc  class");
-//                // setLatlog(String.valueOf(lat), String.valueOf(location.getLongitude()));
-//                Toast.makeText(contextt, "" + lat + "lastloc", Toast.LENGTH_LONG).show();
-//                Log.d("hello", "" + lat + "lat in success   class");
-//                longtlat = String.valueOf(lat);
-//                if (longtlat != null) {
-//                    // return longtlat;
-//                }
-//            }
-//        });
-//        Log.d("hello",longtlat+"class long");
-//        return longtlat;
-//    }
-//}

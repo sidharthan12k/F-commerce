@@ -132,7 +132,7 @@
         android:layout_marginTop="9dp"
         android:layout_marginEnd="160dp"
         android:text="Save"
-        android:onClick="saveItems"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MRPPrice" />
@@ -163,10 +163,10 @@
         android:text="MRP Price : "
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+        app:layout_constraintTop_toBottomOf="@+id/quantityData" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName5"
+        android:id="@+id/quantityData"
         android:layout_width="205dp"
         android:layout_height="49dp"
         android:layout_marginStart="101dp"

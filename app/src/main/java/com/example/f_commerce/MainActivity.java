@@ -100,7 +100,11 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "valid username and password", LENGTH_LONG).show();
                     if (s1.isChecked()) {
                         Intent intent = new Intent(getApplicationContext(), SellerHomePage.class);
-                        intent.putExtra("type", s1.isChecked());
+                        //intent.putExtra("type", s1.isChecked());
+                        int index = usr.indexOf('@');
+                        Toast.makeText(getApplicationContext(),""+index,Toast.LENGTH_LONG).show();
+                      String str = usr.substring(0,index);
+                        intent.putExtra("usr",str);
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(getApplicationContext(), homePage.class);

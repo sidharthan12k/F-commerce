@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,6 +39,9 @@ import java.util.Objects;
 public class homePage extends AppCompatActivity {
     GridView gridView;
     String[] veg = {"ONION", "CARROT", "BEETROOT", "CABBAGE", "CALIFLOWER"};
+    String[] price ={"100","80","45","40","30"};
+    String[] stock ={"1000","300","600","400","200"};
+    EditText e1,e2;
     int[] img = {R.drawable.onion, R.drawable.carrot, R.drawable.beetroot, R.drawable.cabbage, R.drawable.califlower};
     boolean b1;
     int PICK_IMAGE = 101;
@@ -49,6 +54,7 @@ public class homePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home_page);
         gridView = (GridView) findViewById(R.id.gridView);
         CustomeAdapter customeadapter = new CustomeAdapter();
@@ -62,10 +68,12 @@ public class homePage extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), cart.class);
                 intent.putExtra("name", veg[position]);
                 intent.putExtra("img", img[position]);
+                intent.putExtra("price",price[position]);
+                intent.putExtra("stock",stock[position]);
                 intent.putExtra("type", b1);
-                //startActivity(intent);
+                startActivity(intent);
                 //speechToText();
-                getImage();
+                //getImage();
             }
         });
     }
@@ -153,8 +161,15 @@ private class CustomeAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup parent) {
         View view1 = getLayoutInflater().inflate(R.layout.row_data, null);
         TextView txt1 = view1.findViewById(R.id.rowdatatext);
+        TextView txt2 = view1.findViewById(R.id.rowdatatext1);
+        TextView txt3 = view1.findViewById(R.id.rowdatatext2);
         ImageView img1 = view1.findViewById(R.id.rowdataimg);
+        txt3.setText("Price : "+price[i]);
+        txt2.setText("Stock : "+stock[i]);
+        txt3.setTextColor(Color.parseColor("#228B22"));
+        txt2.setTextColor(Color.parseColor("#696969"));
         txt1.setText(veg[i]);
+
         img1.setImageResource(img[i]);
         return view1;
     }

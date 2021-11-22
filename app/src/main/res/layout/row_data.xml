@@ -1,33 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        app:cardElevation="10dp"-->
+<!--        app:cardCornerRadius="10dp"-->
+
+<!--        app:cardBackgroundColor="@color/white"-->
+<!--        app:cardMaxElevation="11dp"-->
+<!--        app:cardPreventCornerOverlap="true"-->
+<!--        app:cardUseCompatPadding="true"-->
+<!--        android:layout_height="wrap_content">-->
     <RelativeLayout
         android:id="@+id/gridView"
-        android:layout_width="190dp"
-        android:layout_height="190dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+
         >
+
         <TextView
             android:id="@+id/rowdatatext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:text="ONION"
-            android:textStyle="bold"
+            android:layout_marginBottom="86dp"
+            android:layout_toRightOf="@+id/rowdataimg"
+            android:paddingLeft="20dp"
+            android:text="Name"
             android:textColor="@color/brown"
-            android:textSize="25dp">
+            android:textSize="20dp"
+            android:textStyle="bold">
+        </TextView>
+        <TextView
+            android:id="@+id/rowdatatext1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="45dp"
+            android:layout_toRightOf="@+id/rowdataimg"
+            android:paddingLeft="20dp"
+            android:text="hair"
 
+            android:textColor="@color/brown"
+            android:textSize="16dp">
+        </TextView>
+        <TextView
+            android:id="@+id/rowdatatext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/rowdataimg"
+            android:paddingLeft="20dp"
+            android:text="hair"
+            android:textColor="@color/brown"
+            android:textSize="16dp">
         </TextView>
         <ImageView
             android:id="@+id/rowdataimg"
-            android:layout_width="110dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+
             android:src="@drawable/onion">
 
         </ImageView>
     </RelativeLayout>
+<!--    </androidx.cardview.widget.CardView>-->
 </RelativeLayout>
 
