@@ -74,33 +74,33 @@ public class cart extends AppCompatActivity {
         stockavailable = Integer.parseInt(intent.getStringExtra("stock"));
         e2.setInputType(InputType.TYPE_NULL);
         total.setText("hello");
-        e1.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if((Integer.parseInt(String.valueOf(s)))>=stockavailable){
-//                    //e1.setError("Available quantity is : "+stockavailable);
-//                }else{
-//                    int n = Integer.parseInt(e1.getText().toString());
-//                    total.setText(n*(Integer.parseInt(e2.getText().toString())));
-
-                updatePrice();
+//        e1.addTextChangedListener(new TextWatcher() {
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+////                if((Integer.parseInt(String.valueOf(s)))>=stockavailable){
+////                    //e1.setError("Available quantity is : "+stockavailable);
+////                }else{
+////                    int n = Integer.parseInt(e1.getText().toString());
+////                    total.setText(n*(Integer.parseInt(e2.getText().toString())));
+//
+//                updatePrice();
+////                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
 //                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        database = FirebaseDatabase
-                .getInstance()
-                .getReference("pricing").child(intent.getStringExtra("name"));
+//        });
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        database = FirebaseDatabase
+//                .getInstance()
+//                .getReference("pricing").child(intent.getStringExtra("name"));
         //e1=(EditText)findViewById(R.id.editTextNumberDecimal);
        /* e2=(EditText)findViewById(R.id.editTextNumberDecimal2);
         database.addValueEventListener(new ValueEventListener() {
